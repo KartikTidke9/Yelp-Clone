@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import restaurantRouter from "./routes/restaurant.js";
+import reviewRouter from "./routes/review.js";
 
 //configs
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 //routes
 app.use("/api/v1/restaurants", restaurantRouter);
+app.use("/api/v1/reviews", reviewRouter);
 app.use("/*", (_, res) => {
   res.status(404).json({ message: "Not Found" });
 });

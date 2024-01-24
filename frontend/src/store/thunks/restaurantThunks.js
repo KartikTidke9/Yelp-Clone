@@ -40,7 +40,6 @@ const updateRestaurant = createAsyncThunk("restro/update", async (data) => {
 
 const findRestaurant = createAsyncThunk("restro/find", async (id) => {
   try {
-    console.log(id);
     const res = await restaurantApi.get(`/${id}`);
     return res.data;
   } catch (err) {

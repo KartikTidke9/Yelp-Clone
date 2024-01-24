@@ -1,6 +1,4 @@
-
 CREATE DATABASE yelp
-
 -- restaurants TABLE
 CREATE TABLE
     restaurants (
@@ -12,3 +10,15 @@ CREATE TABLE
             AND price_range <= 5
         )
     )
+    -- reviews TABLE
+CREATE TABLE
+    reviews (
+        id BIGSERIAL NOT NULL PRIMARY KEY,
+        name VARCHAR(50) NOT NULL,
+        review TEXT NOT NULL,
+        rating DECIMAL NOT NULL CHECK (
+            rating >= 1
+            AND rating <= 5
+        ), 
+        restaurant_id BIGINT NOT NULL REFERENCES restaurants (id)
+    );
