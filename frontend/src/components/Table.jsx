@@ -3,6 +3,7 @@ import { useThunk } from "../hooks/useThunk";
 import { deleteRestaurant, fetchAllRestaurants } from "../store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Ratings from "./Ratings";
 
 function Table() {
   const [
@@ -54,11 +55,19 @@ function Table() {
   } else {
     results = restaurants?.data?.map((r) => {
       return (
-        <tr key={r.id} onClick={() => navigate(`/restaurants/${r.id}`)} className="cursor-pointer">
+        <tr
+          key={r.id}
+          onClick={() => navigate(`/restaurants/${r.id}`)}
+          className="cursor-pointer"
+        >
           <td>{r.name}</td>
           <td>{r.location}</td>
           <td>{"$".repeat(r.price_range)}</td>
-          <td>dsd</td>
+          <td>
+            <div className="d-flex gap-1 align-items-center justify-content-center">
+              <Ratings rating={r.average_rating} /> ({r.count})
+            </div>
+          </td>
           <td>
             <button
               className="btn btn-warning"

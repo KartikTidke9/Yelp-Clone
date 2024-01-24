@@ -4,7 +4,9 @@ class RestaurantController {
   //getting all restaurants
   static async getAllRestaurants(req, res) {
     try {
-      const restros = await pool.query("SELECT * FROM restaurants");
+      const restros = await pool.query(
+        "select * from restaurants left join (select restaurant_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by restaurant_id) reviews  on reviews.restaurant_id = restaurants.id "
+      );
 
       res.status(200).json({ data: restros.rows, result: restros.rowCount });
     } catch (err) {
@@ -59,7 +61,7 @@ class RestaurantController {
     try {
       const { id } = req.params;
       const { name, location, price } = req.body;
-        console.log(name, location, price, id);
+      console.log(name, location, price, id);
       const updatedRestro = await pool.query(
         "UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 RETURNING *",
         [name, location, price, id]
